@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 	<title>demo列表</title>
 	<style>
 		body {
@@ -35,6 +35,15 @@
 			text-indent: 2em;
 			background: #2196F3;
 			color: #fff;
+		}
+		@media screen and (max-width: 500px) {
+			.wrap {
+				width: 300px;
+				margin: 50px auto 0;
+				padding: 8px;
+				border: 1px solid #eee;
+				font-size: 20px;
+			}
 		}
 	</style>
 </head>
