@@ -1,3 +1,108 @@
-<!DOCTYPE html><html><head><meta charset=utf-8><title>vue-cnodejs-my</title><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui"><style>[v-cloak] {
-			display: none!important;
-		}</style><link href=/app/cnodejs/static/css/app.6319c9b9f94fb036eda7bdc69aecc2d3.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=/app/cnodejs/static/js/manifest.d8676a46c49f8548029b.js></script><script type=text/javascript src=/app/cnodejs/static/js/vendor.8906432da04db2838918.js></script><script type=text/javascript src=/app/cnodejs/static/js/app.ad2a041e17fa87850d99.js></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>日历组件</title>
+	<link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+	<div id="calendar">
+		<div class="calendar-input">
+			<label>
+				<span>入住：</span>
+				<input type="text" value="">
+			</label>
+			<div class="weekdays"></div>
+			<div class="prompt"></div>
+		</div>
+	</div>
+	<div class="calendar-box">
+		<table cellspacing="0" border="0" cellpadding="0">
+			<thead>
+				<tr class="select-date">
+					<th  colspan="7">
+						<span class="prev"><</span>
+						<span class="year"></span>
+						<span class="nian">年</span>
+						<span class="month"></span>
+						<span class="yue">月</span>
+						<span class="next">></span>
+					</th>
+
+				</tr>
+				<tr class="cal-weekday">
+
+					<th>一</th>
+					<th>二</th>
+					<th>三</th>
+					<th>四</th>
+					<th>五</th>
+					<th>六</th>
+					<th>日</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<script src="js/calendar.js">
+	</script>
+</body>
+</html>
