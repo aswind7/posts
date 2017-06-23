@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+	<title>liuxiaoyuan520</title>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		[v-cloak] {
+			display: none;
+		}
+		@media screen and (max-width: 500px) {
+			#app {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				font-size: 20px;
+			}
+			.lxy_img {
+				width: 250px;
+			}
+			.words {
+				font-family: cursive;
+				/*height: 100px;*/
+				margin-top: 15px;
+				overflow: hidden;
+			}
+			.words pre {
+				font-family: cursive;
+			}
+			.icon001 {
+				width: 33px;
+				height: 32px;
+				display: block;
+				background: url(icon001.png);
+				background-size: 100%;
+				z-index: 2;
+				position: absolute;
+				top: 8px;
+				right: 8px;
+			}
+			.rotate {
+				animation: rotate 6s linear infinite;
+				animation-delay: 1s;
+			}
+			@keyframes rotate{
+				0% {
+					transform: rotate(0deg);
+				}
+				100% {
+					transform: rotate(360deg);	
+				}
+			}
+		}
+	</style>
+</head>
+<body background="">
+	<div id="app" v-cloak>
+		<!-- music -->
+		<audio src="i love you.mp3" style="display: none;" autoplay="">
+			您的浏览器不支持 audio 标签。
+		</audio>
+		<div class="icon001 rotate">
+		</div>
+		<img src="lxy.jpeg" alt="" class="lxy_img">
+		<section class="words" :style="{height: wordsHeight}" >
+			<!-- <pre>{{displayWords}}</pre> -->
+			<p ref="words">
+				想说些啥呢?<br>	
+				其实心里有句话对你说<br>
+				但是又说不出口<br>
+				刘小圆，我该怎么办呢。<br>
+				未完待续...<br>
+			</p>
+			
+		</section>
+	</div>
+	<script src="https://unpkg.com/vue@2.3.4/dist/vue.js"></script>
+	<script>
+		new Vue({
+			el: "#app",
+			data: {
+				wordsList: ["想说些啥呢?", "其实心里有句话对你说","但是又说不出口","未完待续"],
+				displayWords: "",
+				wordsHeight: "0px"
+			},
+			mounted() {
+				this.displayWords = this.wordsList[0]
+				this.playWords();
+			},
+			methods: {
+				playWords() {
+					let actualHeight = this.$refs.words.clientHeight;
+					console.log(actualHeight);
+					let id = setInterval(()=>{
+						this.wordsHeight = parseInt(this.wordsHeight) + 1 + "px";
+						console.log(this);
+						console.log(this.wordsHeight);
+						if (parseInt(this.wordsHeight) > actualHeight) {
+							clearInterval(id);
+						}
+					}, 30);
+				}	
+			}
+			
+		})
+	</script>
+</body>
+</html>
