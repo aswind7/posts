@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 	<title>天气预报</title>
 	<style>
 		[v-cloak] {
@@ -18,17 +18,36 @@
 			margin-bottom: 10px;
 		}
 		.weather-box .info li {
-			display: -webkit-flex;
-			display: -moz-flex;
-			display: -ms-flex;
-			display: -o-flex;
 			display: flex;
 			justify-content: space-between;
 			width: 500px;
 			margin-top: 15px;
 		}
 
-		.weather-box .info li span {}
+		@media screen and (max-width: 500px) {
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			.weather-box {
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				font-size: 20px;
+			}
+			.weather-box .info li {
+				width: 300px;
+				display: block;
+				overflow: hidden;
+			}
+			.weather-box .info li span{
+				float: left;
+				width: 50%;
+				line-height: 20px;
+				margin-top: 5px;
+			}
+		}
 	</style>
 </head>
 
@@ -52,26 +71,26 @@
 				<li>
 					<span>今天白天：</span> 
 					<span>{{weatherInfo.showapi_res_body.f1.day_weather}}</span> 
-					<span>风力：{{weatherInfo.showapi_res_body.f1.day_wind_power}}</span> 
+					<span>风力：{{weatherInfo.showapi_res_body.f1.day_wind_power | substr_wind}}</span> 
 					<span>温度：{{weatherInfo.showapi_res_body.f1.day_air_temperature}} 摄氏度</span>
 				</li>
 				<li>
 					<span>今天夜间：</span> 
 					<span>{{weatherInfo.showapi_res_body.f1.night_weather}}</span> 
-					<span>风力：{{weatherInfo.showapi_res_body.f1.night_wind_power}}</span> 
+					<span>风力：{{weatherInfo.showapi_res_body.f1.night_wind_power | substr_wind}}</span> 
 					<span>温度：{{weatherInfo.showapi_res_body.f1.night_air_temperature}} 摄氏度</span>
 				</li>
 
 				<li>
 					<span>明天白天：</span> 
 					<span>{{weatherInfo.showapi_res_body.f2.day_weather}}</span> 
-					<span>风力：{{weatherInfo.showapi_res_body.f2.day_wind_power}}</span> 
+					<span>风力：{{weatherInfo.showapi_res_body.f2.day_wind_power | substr_wind}}</span> 
 					<span>温度：{{weatherInfo.showapi_res_body.f2.day_air_temperature}} 摄氏度</span>
 				</li>
 				<li>
 					<span>明天夜间：</span> 
 					<span>{{weatherInfo.showapi_res_body.f2.night_weather}}</span> 
-					<span>风力：{{weatherInfo.showapi_res_body.f2.night_wind_power}}</span> 
+					<span>风力：{{weatherInfo.showapi_res_body.f2.night_wind_power | substr_wind}}</span> 
 					<span>温度：{{weatherInfo.showapi_res_body.f2.night_air_temperature}} 摄氏度</span>
 				</li>
 			</ul>
@@ -89,7 +108,14 @@
 				weatherInfo: null,
 				isdisabled: false
 			},
-			created() {},
+			created() {
+				this.seeWeather();
+			},
+			filters: {
+				substr_wind(value) {
+					return value.substr(0, 2);
+				}
+			},
 			methods: {
 				seeWeather() {
 					while (window.returnCitySN) {
