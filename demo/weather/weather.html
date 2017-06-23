@@ -43,6 +43,9 @@
 		<div class="info" v-else>
 			<ul>
 				<li>
+					ip地址：{{ip}}
+				</li>
+				<li>
 					{{weatherInfo.showapi_res_body.cityInfo.c9}} {{weatherInfo.showapi_res_body.cityInfo.c7}} {{weatherInfo.showapi_res_body.cityInfo.c5}}
 					<!-- 中国 北京 -->
 				</li>
@@ -74,7 +77,8 @@
 			</ul>
 		</div>
 	</div>
-	<script type="text/javascript" src="https://www.coding123.net/getip.ashx?js=1"></script>
+	<!-- <script type="text/javascript" src="https://www.coding123.net/getip.ashx?js=1"></script> -->
+	<script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>  
 	<script src="https://unpkg.com/vue@2.3.4/dist/vue.js"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script>
@@ -88,8 +92,9 @@
 			created() {},
 			methods: {
 				seeWeather() {
-					while (window.ip) {
-						this.ip = window.ip.substr(1);
+					while (window.returnCitySN) {
+						// this.ip = window.ip.substr(1);
+						this.ip = window.returnCitySN["cip"];
 						console.log("ip" + this.ip);
 						break;
 					}
