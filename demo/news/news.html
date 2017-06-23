@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+	<!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
+	<title>新闻头条</title>
+	<style>
+		[v-cloak] {
+			display: none;
+		}
+		@media screen and (max-width: 500px) {
+			* {
+				padding: 0;
+				margin: 0;
+				list-style-type: none;
+			}
+			#app {
+				padding: 10px 20px;
+			}
+			#app li  {
+				margin-top: 20px;
+				/*text-align: center;*/
+			}
+			#app li img {
+				display: block;
+				width: 60%;
+				margin: 20px auto 0;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div id="app" class="" v-cloak>
+		<ul>
+			<li v-for="item in list">
+				<div class="item-line">
+					{{item.author_name}}
+					{{item.category}}
+					{{item.date}}
+				</div>
+				<div class="item-line">
+					<img :src="item.thumbnail_pic_s" alt="">
+					<img :src="item.thumbnail_pic_s02" alt="">
+					<img :src="item.thumbnail_pic_s03" alt="">
+				</div>
+				<div class="item-line">
+					<a :href="item.url" target="_blank">{{item.title}}</a>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<script src="https://unpkg.com/vue@2.3.4/dist/vue.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script>
+		new Vue({
+			el: "#app",
+			data: {
+				list: []
+			},
+			created() {
+				this.findNews();
+			},
+			methods: {
+				findNews() {
+					var instance = axios.create({
+						headers: {
+							'Authorization': 'APPCODE bb33f57960134423832b1cae772a5533'
+						}
+					});
+
+					instance.get("//toutiao-ali.juheapi.com/toutiao/index", {
+						params: {
+
+						}
+					})
+					.then((res) => {
+						console.log(res);
+						this.list = res.data.result.data;
+
+					})
+				}
+			}
+		})
+	</script>
+</body>
+
+</html>
