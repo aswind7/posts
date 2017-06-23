@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>天气预报</title>
+	<style>
+		[v-cloak] {
+			display: none;
+		}
+		button {
+			padding: 10px 20px;
+			background: #fff;
+			border: 1px solid #9a9a9a;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 14px;
+			margin-bottom: 10px;
+		}
+		.weather-box .info li {
+			display: -webkit-flex;
+			display: -moz-flex;
+			display: -ms-flex;
+			display: -o-flex;
+			display: flex;
+			justify-content: space-between;
+			width: 500px;
+			margin-top: 15px;
+		}
+
+		.weather-box .info li span {}
+	</style>
+</head>
+
+<body>
+	<div id="app" class="weather-box" v-cloak>
+		<button @click="seeWeather" :disabled="isdisabled">
+			查看天气
+		</button>
+		<div class="none" v-if="!weatherInfo">
+			暂无内容
+		</div>
+		<div class="info" v-else>
+			<ul>
+				<li>
+					{{weatherInfo.showapi_res_body.cityInfo.c9}} {{weatherInfo.showapi_res_body.cityInfo.c7}} {{weatherInfo.showapi_res_body.cityInfo.c5}}
+					<!-- 中国 北京 -->
+				</li>
+				<li>
+					<span>今天白天：</span> 
+					<span>{{weatherInfo.showapi_res_body.f1.day_weather}}</span> 
+					<span>风力：{{weatherInfo.showapi_res_body.f1.day_wind_power}}</span> 
+					<span>温度：{{weatherInfo.showapi_res_body.f1.day_air_temperature}} 摄氏度</span>
+				</li>
+				<li>
+					<span>今天夜间：</span> 
+					<span>{{weatherInfo.showapi_res_body.f1.night_weather}}</span> 
+					<span>风力：{{weatherInfo.showapi_res_body.f1.night_wind_power}}</span> 
+					<span>温度：{{weatherInfo.showapi_res_body.f1.night_air_temperature}} 摄氏度</span>
+				</li>
+
+				<li>
+					<span>明天白天：</span> 
+					<span>{{weatherInfo.showapi_res_body.f2.day_weather}}</span> 
+					<span>风力：{{weatherInfo.showapi_res_body.f2.day_wind_power}}</span> 
+					<span>温度：{{weatherInfo.showapi_res_body.f2.day_air_temperature}} 摄氏度</span>
+				</li>
+				<li>
+					<span>明天夜间：</span> 
+					<span>{{weatherInfo.showapi_res_body.f2.night_weather}}</span> 
+					<span>风力：{{weatherInfo.showapi_res_body.f2.night_wind_power}}</span> 
+					<span>温度：{{weatherInfo.showapi_res_body.f2.night_air_temperature}} 摄氏度</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<script type="text/javascript" src="http://www.coding123.net/getip.ashx?js=1"></script>
+	<script src="https://unpkg.com/vue@2.3.4/dist/vue.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script>
+		new Vue({
+			el: "#app",
+			data: {
+				ip: "",
+				weatherInfo: null,
+				isdisabled: false
+			},
+			created() {},
+			methods: {
+				seeWeather() {
+					while (window.ip) {
+						this.ip = window.ip.substr(1);
+						break;
+					}
+					var instance = axios.create({
+						headers: {
+							'Authorization': 'APPCODE bb33f57960134423832b1cae772a5533'
+						}
+					});
+
+					instance.get("https://ali-weather.showapi.com/ip-to-weather", {
+						params: {
+							ip: this.ip
+						}
+					})
+					.then((res) => {
+						this.weatherInfo = res.data;
+						this.isdisabled = true;
+						console.log(res);
+					})
+				}
+			}
+		})
+	</script>
+</body>
+
+</html>
