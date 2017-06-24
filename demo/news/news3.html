@@ -4,12 +4,12 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-	<!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
-	<title>新闻头条</title>
+	<title>今日头条</title>
 	<style>
 		[v-cloak] {
 			display: none;
 		}
+
 		@media screen and (max-width: 500px) {
 			* {
 				padding: 0;
@@ -19,9 +19,8 @@
 			#app {
 				padding: 10px 20px;
 			}
-			#app li  {
+			#app li {
 				margin-top: 20px;
-				/*text-align: center;*/
 			}
 			#app li img {
 				display: block;
@@ -37,9 +36,7 @@
 		<ul>
 			<li v-for="item in list">
 				<div class="item-line">
-					{{item.author_name}}
-					{{item.category}}
-					{{item.date}}
+					{{item.author_name}} {{item.category}} {{item.date}}
 				</div>
 				<div class="item-line">
 					<img :src="item.thumbnail_pic_s" alt="">
@@ -66,14 +63,10 @@
 			methods: {
 				findNews() {
 					var instance = axios.create({
-						headers: {
-							'Authorization': 'APPCODE bb33f57960134423832b1cae772a5533'
-						}
 					});
 
-					instance.get("http://toutiao-ali.juheapi.com/toutiao/index", {
+					instance.get("http://toutiao.com/api/article/recent/?source=2&category=news_hot&as=A105177907376A5&cp=5797C7865AD54E1&count=20&offset=0&_=1481986412", {
 						params: {
-
 						}
 					})
 					.then((res) => {
