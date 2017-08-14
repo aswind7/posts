@@ -18,14 +18,15 @@ Utils.rotateArray = function(array) {
 	}
 	return arr;
 }
-	// 传入array  会影响原有数组 
-	//  return 是否移动 和 合并的分数
-	Utils.arrayPushRight = function(array) {
-		var isMoved = false;
-		var mergeScore = 0;
 
-		for (var r = 0; r < array.length; r++) {
-			arr = array[r];
+// 传入array  会影响原有数组 
+//  return 是否移动 和 合并的分数
+Utils.arrayPushRight = function(array) {
+	var isMoved = false;
+	var mergeScore = 0;
+
+	for (var r = 0; r < array.length; r++) {
+		arr = array[r];
 		// 消除0
 		for (var i = arr.length - 2; i >= 0; i--) {
 			var k = i;
@@ -61,24 +62,26 @@ Utils.rotateArray = function(array) {
 		mergeScore: mergeScore
 	};
 };
-	// 比较两个二维数组是否完全相同
-	Utils.isSameMatrix = function(a, b) {
-		if (a.length !== b.length) {
+
+// 比较两个二维数组是否完全相同
+Utils.isSameMatrix = function(a, b) {
+	if (a.length !== b.length) {
+		return false;
+	}
+	for (var i = 0; i < a.length; i++) {
+		if (a[i].length !== b[i].length) {
 			return false;
 		}
-		for (var i = 0; i < a.length; i++) {
-			if (a[i].length !== b[i].length) {
-				return false;
-			}
-			if (a[i].toString() !== b[i].toString()) {
-				return false;
-			}
+		if (a[i].toString() !== b[i].toString()) {
+			return false;
 		}
-		console.log("a is the same as b")
-		return true;
 	}
-	// 深拷贝 并返回一个拷贝
-	Utils.deepClone = function(param) {
+	console.log("a is the same as b")
+	return true;
+}
+
+// 深拷贝 并返回一个拷贝
+Utils.deepClone = function(param) {
 	// 数字或者字符串 简单类型
 	if ((typeof param) !== "object") {
 		return param;

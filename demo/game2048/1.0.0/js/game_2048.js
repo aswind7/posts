@@ -19,6 +19,7 @@ function Game() {
 	}
 	this.init();
 }
+
 Game.prototype.init = function() {
 	matrix = [
 		[0, 0, 0, 0],
@@ -36,28 +37,30 @@ Game.prototype.init = function() {
 	// 监听
 	this.watchDirection();
 };
+
 // 在随机的数据空白格增加一个2或者4
 Game.prototype.generateANumber = function() {
-		var number = Math.random() > 0.25 ? 2 : 4;
-		// 存储每个空白格的坐标
-		var storeCoord = [];
-		var len;
+	var number = Math.random() > 0.25 ? 2 : 4;
+	// 存储每个空白格的坐标
+	var storeCoord = [];
+	var len;
 
-		for (var i = 0; i < matrix.length; i++) {
-			for (var j = 0; j < matrix[i].length; j++) {
-				matrix[i][j] === 0 ? storeCoord.push({
-					x: i,
-					y: j
-				}) : false;
-			}
+	for (var i = 0; i < matrix.length; i++) {
+		for (var j = 0; j < matrix[i].length; j++) {
+			matrix[i][j] === 0 ? storeCoord.push({
+				x: i,
+				y: j
+			}) : false;
 		}
-		len = storeCoord.length;
-		var tmp = Math.floor(Math.random() * len),
-			x = storeCoord[tmp].x;
-		y = storeCoord[tmp].y;
-		matrix[x][y] = number;
 	}
-	// 保存进度
+	len = storeCoord.length;
+	var tmp = Math.floor(Math.random() * len),
+		x = storeCoord[tmp].x;
+	y = storeCoord[tmp].y;
+	matrix[x][y] = number;
+}
+
+// 保存进度
 Game.prototype.saveProgress = function() {
 	var tmp_matrix = Utils.deepClone(matrix);
 	var obj = {
@@ -66,19 +69,21 @@ Game.prototype.saveProgress = function() {
 	};
 	progressList.push(obj);
 };
+
 // 撤销
 Game.prototype.undo = function() {
-		if (progressList.length <= 1) {
-			return;
-		}
-		progressList.pop();
-		var obj = progressList.slice(-1);
-		matrix = Utils.deepClone(obj[0].matrix);
-		score = obj[0].score;
-		// 变为未结束
-		gameOverState = false;
+	if (progressList.length <= 1) {
+		return;
 	}
-	// 往右移动 计分 记录是否移动
+	progressList.pop();
+	var obj = progressList.slice(-1);
+	matrix = Utils.deepClone(obj[0].matrix);
+	score = obj[0].score;
+	// 变为未结束
+	gameOverState = false;
+}
+
+// 往右移动 计分 记录是否移动
 Game.prototype.pushRight = function(matrix) {
 	var obj = Utils.arrayPushRight(matrix);
 	var isMoved = obj.isMoved;
@@ -93,39 +98,40 @@ Game.prototype.pushRight = function(matrix) {
 }
 
 Game.prototype.judgeGameOver = function() {
-		var noSpace = true;
-		var allDifferent = true;
-		// 空白格
-		for (var i = 0; i < matrix.length; i++) {
-			for (var j = 0; j < matrix[i].length; j++) {
-				if (matrix[i][j] === 0) {
-					noSpace = false;
-				}
+	var noSpace = true;
+	var allDifferent = true;
+	// 空白格
+	for (var i = 0; i < matrix.length; i++) {
+		for (var j = 0; j < matrix[i].length; j++) {
+			if (matrix[i][j] === 0) {
+				noSpace = false;
 			}
 		}
-		// 横着比较
-		for (var i = 0; i < matrix.length; i++) {
-			for (var j = 0; j < matrix[i].length - 1; j++) {
-				if (matrix[i][j] === matrix[i][j + 1]) {
-					allDifferent = false;
-				}
-			}
-		}
-		// 竖着比较
-		for (var i = 0; i < matrix.length - 1; i++) {
-			for (var j = 0; j < matrix[i].length; j++) {
-				if (matrix[i][j] === matrix[i + 1][j]) {
-					allDifferent = false;
-				}
-			}
-		}
-		// console.log(`noSpace is ${noSpace}, allDifferent is ${allDifferent}`)
-		if (noSpace && allDifferent) {
-			return true;
-		}
-		return false;
 	}
-	// 移动
+	// 横着比较
+	for (var i = 0; i < matrix.length; i++) {
+		for (var j = 0; j < matrix[i].length - 1; j++) {
+			if (matrix[i][j] === matrix[i][j + 1]) {
+				allDifferent = false;
+			}
+		}
+	}
+	// 竖着比较
+	for (var i = 0; i < matrix.length - 1; i++) {
+		for (var j = 0; j < matrix[i].length; j++) {
+			if (matrix[i][j] === matrix[i + 1][j]) {
+				allDifferent = false;
+			}
+		}
+	}
+	// console.log(`noSpace is ${noSpace}, allDifferent is ${allDifferent}`)
+	if (noSpace && allDifferent) {
+		return true;
+	}
+	return false;
+}
+
+// 移动
 Game.prototype.move = function(position) {
 	// 若游戏已经结束，则返回
 	if (gameOverState) {
@@ -191,41 +197,44 @@ Game.prototype.move = function(position) {
 		self.render();
 	}
 };
+
 // 重置样式
 Game.prototype.resetRender = function() {
-		matrixPanel.innerHTML = "";
-		gameScore.innerHTML = 0;
-		gameOverMask.style.display = "none";
-	}
-	// 根据数据渲染dom
-Game.prototype.render = function() {
-		var self = this;
-		for (var i = 0; i < matrix.length; i++) {
-			for (var j = 0; j < matrix[i].length; j++) {
-				// 需要根据二维数组的i j 值来生成pos_class!
-				// 若有
-				if (matrix[i][j] !== 0) {
-					var div = document.createElement("div");
-					var text = matrix[i][j];
+	matrixPanel.innerHTML = "";
+	gameScore.innerHTML = 0;
+	gameOverMask.style.display = "none";
+}
 
-					div.className = "data-item";
-					div.className += " item_value_" + text;
-					div.className += " item_pos_" + i + "_" + j;
-					div.innerHTML = text;
-					matrixPanel.appendChild(div);
-				}
+// 根据数据渲染dom
+Game.prototype.render = function() {
+	var self = this;
+	for (var i = 0; i < matrix.length; i++) {
+		for (var j = 0; j < matrix[i].length; j++) {
+			// 需要根据二维数组的i j 值来生成pos_class!
+			// 若有
+			if (matrix[i][j] !== 0) {
+				var div = document.createElement("div");
+				var text = matrix[i][j];
+
+				div.className = "data-item";
+				div.className += " item_value_" + text;
+				div.className += " item_pos_" + i + "_" + j;
+				div.innerHTML = text;
+				matrixPanel.appendChild(div);
 			}
 		}
-		// 渲染分数
-		gameScore.innerHTML = score;
-		// gameover
-		if (gameOverState) {
-			gameOverMask.style.display = "block";
-		} else {
-			gameOverMask.style.display = "none";
-		}
 	}
-	// 根据手势 获取方向   number 左 上 右 下  37~40
+	// 渲染分数
+	gameScore.innerHTML = score;
+	// gameover
+	if (gameOverState) {
+		gameOverMask.style.display = "block";
+	} else {
+		gameOverMask.style.display = "none";
+	}
+}
+
+// 根据手势 获取方向   number 左 上 右 下  37~40
 Game.prototype.watchDirection = function() {
 	var self = this;
 	// touch暂存

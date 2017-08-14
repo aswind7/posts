@@ -11,12 +11,14 @@ window.onload = function() {
 	c1.init();
 	c1.bindEvent();
 };
+
 /**
  * @Description 库函数
  * @Author giovanni
  * @Date 2016年7月27日 16:37
  */
 var calendarLibrary = {};
+
 calendarLibrary.getWeekday = function(date) {
 	// date是个Date对象
 	switch (date.getDay()) {
@@ -36,99 +38,103 @@ calendarLibrary.getWeekday = function(date) {
 			return "星期六";
 	}
 }
+
 calendarLibrary.getDateFromInput = function(words) {
-		var arr = [];
-		arr = words.match(/([0-9]{4})-([0-9]+)-([0-9]+)/);
-		if (!arr || arr.length !== 4) {
-			return "格式错误";
-		} else if (arr[1] > 3000 || arr[1] < 1000 || arr[2] < 1 || arr[2] > 12 || arr[3] < 1 || arr[3] > 31) {
-			return "格式错误";
-		} else {
-			return {
-				year: arr[1],
-				month: arr[2],
-				day: arr[3]
-			}
+	var arr = [];
+	arr = words.match(/([0-9]{4})-([0-9]+)-([0-9]+)/);
+	if (!arr || arr.length !== 4) {
+		return "格式错误";
+	} else if (arr[1] > 3000 || arr[1] < 1000 || arr[2] < 1 || arr[2] > 12 || arr[3] < 1 || arr[3] > 31) {
+		return "格式错误";
+	} else {
+		return {
+			year: arr[1],
+			month: arr[2],
+			day: arr[3]
 		}
 	}
-	// 按照国内的方式，周日在最后
+}
+
+// 按照国内的方式，周日在最后
 calendarLibrary.renderTable = function(nowYear, nowMonth, panelDOM) {
-		// 渲染表格,先获取此月的第一天是周几,注意月数减一
-		var d = new Date(nowYear, nowMonth - 1, 1);
-		var weekdayNumber = d.getDay() === 0 ? 7 : d.getDay();
-		// 获取这个月的天数
-		var amountOfDays = (new Date(nowYear, nowMonth, 0)).getDate();
-		var daysArray = [];
-		var tdsArray = panelDOM.querySelectorAll("tbody td");
-		// 把表格清空,重置
-		tdsArray.forEach(function(elem) {
-			elem.innerHTML = "";
-			elem.className = "";
-		});
-		for (var i = 0; i < amountOfDays; i++) {
-			daysArray.push(i + 1);
-			tdsArray[i].weekdayNumber = (i + 1) % 7 === 0 ? 7 : (i + 1) % 7;
-		}
-		for (var i = 0; i < tdsArray.length; i++) {
-			// 判断前七个是否有空,amountOfDays
-			if (i < 7 && i + 1 < weekdayNumber) {
-				tdsArray[i].innerHTML = "";
-				tdsArray[i].className = "no-data";
-			} else if (daysArray.length) {
-				tdsArray[i].innerHTML = daysArray.shift();
-				tdsArray[i].className = "have-data";
-				// 判断是否今天
-				var today = new Date();
-				if (nowYear == today.getFullYear() && nowMonth == today.getMonth() + 1 && tdsArray[i].innerHTML == today.getDate()) {
-					tdsArray[i].innerHTML = "今天";
-					tdsArray[i].className = "today";
-				}
-			} else {
-				tdsArray[i].className = "no-data";
+	// 渲染表格,先获取此月的第一天是周几,注意月数减一
+	var d = new Date(nowYear, nowMonth - 1, 1);
+	var weekdayNumber = d.getDay() === 0 ? 7 : d.getDay();
+	// 获取这个月的天数
+	var amountOfDays = (new Date(nowYear, nowMonth, 0)).getDate();
+	var daysArray = [];
+	var tdsArray = panelDOM.querySelectorAll("tbody td");
+	// 把表格清空,重置
+	tdsArray.forEach(function(elem) {
+		elem.innerHTML = "";
+		elem.className = "";
+	});
+	for (var i = 0; i < amountOfDays; i++) {
+		daysArray.push(i + 1);
+		tdsArray[i].weekdayNumber = (i + 1) % 7 === 0 ? 7 : (i + 1) % 7;
+	}
+	for (var i = 0; i < tdsArray.length; i++) {
+		// 判断前七个是否有空,amountOfDays
+		if (i < 7 && i + 1 < weekdayNumber) {
+			tdsArray[i].innerHTML = "";
+			tdsArray[i].className = "no-data";
+		} else if (daysArray.length) {
+			tdsArray[i].innerHTML = daysArray.shift();
+			tdsArray[i].className = "have-data";
+			// 判断是否今天
+			var today = new Date();
+			if (nowYear == today.getFullYear() && nowMonth == today.getMonth() + 1 && tdsArray[i].innerHTML == today.getDate()) {
+				tdsArray[i].innerHTML = "今天";
+				tdsArray[i].className = "today";
 			}
+		} else {
+			tdsArray[i].className = "no-data";
 		}
 	}
-	// 按照国外的方式，周日在前面
+}
+
+// 按照国外的方式，周日在前面
 calendarLibrary.renderTable2 = function(nowYear, nowMonth, panelDOM) {
-		// 渲染表格,先获取此月的第一天是周几,注意月数减一
-		var d = new Date(nowYear, nowMonth - 1, 1);
-		var weekdayNumber = d.getDay();
-		// 获取这个月的天数
-		var amountOfDays = (new Date(nowYear, nowMonth, 0)).getDate();
-		var daysArray = [];
-		var tdsArray = panelDOM.querySelectorAll("tbody td");
-		// 把表格清空,重置
-		tdsArray.forEach(function(elem) {
-			elem.innerHTML = "";
-			elem.className = "";
-		});
-		for (var i = 0; i < amountOfDays; i++) {
-			daysArray.push(i + 1);
-			tdsArray[i].weekdayNumber = i % 7;
-		}
-		for (var i = 0; i < tdsArray.length; i++) {
-			// 判断前七个是否有空,amountOfDays
-			if (i < 7 && i < weekdayNumber) {
-				tdsArray[i].className = "no-data";
-			} else if (daysArray.length) {
-				tdsArray[i].innerHTML = daysArray.shift();
-				tdsArray[i].className = "have-data";
-				// 判断是否今天
-				var today = new Date();
-				if (nowYear == today.getFullYear() && nowMonth == today.getMonth() + 1 && tdsArray[i].innerHTML == today.getDate()) {
-					tdsArray[i].innerHTML = "今天";
-					tdsArray[i].className = "today";
-				}
-			} else {
-				tdsArray[i].className = "no-data";
+	// 渲染表格,先获取此月的第一天是周几,注意月数减一
+	var d = new Date(nowYear, nowMonth - 1, 1);
+	var weekdayNumber = d.getDay();
+	// 获取这个月的天数
+	var amountOfDays = (new Date(nowYear, nowMonth, 0)).getDate();
+	var daysArray = [];
+	var tdsArray = panelDOM.querySelectorAll("tbody td");
+	// 把表格清空,重置
+	tdsArray.forEach(function(elem) {
+		elem.innerHTML = "";
+		elem.className = "";
+	});
+	for (var i = 0; i < amountOfDays; i++) {
+		daysArray.push(i + 1);
+		tdsArray[i].weekdayNumber = i % 7;
+	}
+	for (var i = 0; i < tdsArray.length; i++) {
+		// 判断前七个是否有空,amountOfDays
+		if (i < 7 && i < weekdayNumber) {
+			tdsArray[i].className = "no-data";
+		} else if (daysArray.length) {
+			tdsArray[i].innerHTML = daysArray.shift();
+			tdsArray[i].className = "have-data";
+			// 判断是否今天
+			var today = new Date();
+			if (nowYear == today.getFullYear() && nowMonth == today.getMonth() + 1 && tdsArray[i].innerHTML == today.getDate()) {
+				tdsArray[i].innerHTML = "今天";
+				tdsArray[i].className = "today";
 			}
+		} else {
+			tdsArray[i].className = "no-data";
 		}
 	}
-	/**
-	 * @Description 日历构造函数
-	 * @Author giovanni
-	 * @Date 2016年7月27日 16:38
-	 */
+}
+
+/**
+ * @Description 日历构造函数
+ * @Author giovanni
+ * @Date 2016年7月27日 16:38
+ */
 function Calendar(dom) {
 	this.dom = dom;
 	// 是否显示节日
@@ -136,6 +142,7 @@ function Calendar(dom) {
 	// 面板dom
 	this.panelDOM = false;
 }
+
 // 原型函数
 Calendar.prototype.init = function() {
 	var calendarDOM = this.dom;
@@ -164,7 +171,6 @@ Calendar.prototype.init = function() {
 		panelDOM.style.display = "block";
 		// 渲染数据
 		var dateObj = calendarLibrary.getDateFromInput(this.value);
-		console.log(dateObj);
 		if (dateObj === "格式错误" || !dateObj) {
 			calendarInputPrompt.innerHTML = "格式错误";
 			calendarInputPrompt.style.display = "block";
@@ -207,7 +213,6 @@ Calendar.prototype.init = function() {
 		}, false);
 	})
 
-
 	// 为body绑定函数
 	document.body.addEventListener("click", function(event) {
 		event = event || window.event;
@@ -234,7 +239,6 @@ Calendar.prototype.bindEvent = function() {
 			// 这个this是面板
 			nowYearDOM = this.querySelector("span.year");
 			nowMonthDOM = this.querySelector("span.month");
-			// console.log("14:05");
 			// 若是1月，则换年
 			if (nowMonthDOM.innerHTML - 0 === 1) {
 				nowMonthDOM.innerHTML = 12;

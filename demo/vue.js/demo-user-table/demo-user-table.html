@@ -4,10 +4,10 @@
 	<meta charset="UTF-8">
 	<title></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<script src="//cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+	<script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
 
-	<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.0.3/css/bootstrap.min.css">
-	<script src="//cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.js"></script>
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.0.3/css/bootstrap.min.css">
+	<script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.js"></script>
 
 	<!-- lib/vue.js -->
 	<script src="lib/vue.js"></script>
@@ -20,7 +20,7 @@
 				username: "",
 				age: "",
 				userinfo: [],
-				nowIndex: -100,
+				nowIndex: -100, // 全部还是单个的标示  若为-2则全部
 				deleteAll: false
 			},
 			methods: {
@@ -57,7 +57,7 @@
 				<input type="text" class="form-control" id="age" placeholder="年龄" v-model="age">
 			</div>
 			<div class="form-group">
-				<div class="btn  btn-sm btn-primary" v-on:click="add()">添加</div>
+				<div class="btn  btn-sm btn-primary" v-on:click="add">添加</div>
 				<button class="btn btn-danger btn-sm" type="reset">重置</button>
 			</div>
 		</form>
