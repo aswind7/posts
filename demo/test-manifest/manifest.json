@@ -1,0 +1,14 @@
+{
+    "short_name": "短名称",
+    "name": "这是一个完整名称",
+    "icons": [
+        {
+            "src": "icon.png",
+            "type": "image/png",
+            "sizes": "48x48"
+        }
+    ],
+    "background_color": "#2196f3",
+    "display": "standalone",
+    "start_url": "index.html"
+}
