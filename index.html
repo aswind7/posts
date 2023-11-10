@@ -1,109 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<meta charset="UTF-8">
-	<link rel="shortcut icon" href="/favicon.ico">
-	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-	<title>demo列表</title>
-	<style>
-		body {
-			margin: 0;
-			padding: 0;
-		}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer's Blog</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #282c34;
+            color: #61dafb;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+        }
 
-		a {
-			text-decoration: none;
-		}
+        h1 {
+            font-size: 2.5em;
+        }
 
-		.wrap {
-			width: 350px;
-			margin: 0px auto 0;
-			padding: 20px;
-			border: 1px solid #eee;
-			font-size: 20px;
-			position: fixed;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-		}
+        p {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
 
-		.wrap li {
-			line-height: 35px;
-			color: #2196F3;
-		}
+        .cta-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 30px;
+            font-size: 1em;
+            text-decoration: none;
+            color: #fff;
+            background-color: #61dafb;
+            border: 2px solid #61dafb;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
 
-		.wrap li span {
+        .cta-button:hover {
+            background-color: #fff;
+            color: #61dafb;
+        }
 
-			display: block;
-			border-bottom: 1px solid #ddd;
-			transition: all .3s;
-			text-indent: 1em;
-		}
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
 
-		.wrap li span:hover {
-			border-bottom: 1px solid #2196F3;
-			text-indent: 2em;
-			background: #2196F3;
-			color: #fff;
-		}
-
-		@media screen and (max-width: 500px) {
-			.wrap {
-				width: 300px;
-				margin: 0px auto 0;
-				padding: 8px;
-				border: 1px solid #eee;
-				font-size: 20px;
-				position: fixed;
-				left: 50%;
-				top: 50%;
-				transform: translate(-50%, -50%);
-			}
-		}
-	</style>
+        .animated {
+            animation: fadeIn 1.5s ease-in-out;
+        }
+    </style>
 </head>
-
-<body>
-	<div class="wrap">
-		<ol>
-			<a href="demo/game2048/1.0.0/2048.html" target="_blank">
-				<li>
-					<span>
-						2048小游戏
-					</span>
-				</li>
-			</a>
-			<a href="demo/greedySnake/1.0.0/snake.html" target="_blank">
-				<li>
-					<span>
-						简易版贪食蛇（仅键盘）
-					</span>
-				</li>
-			</a>
-			<a href="demo/calendar/index.html" target="_blank">
-				<li>
-					<span>
-						简易日历选择组件
-					</span>
-				</li>
-			</a>
-			<a href="https://sqfbeijing.github.io/app/cnodejs/" target="_blank">
-				<li>
-					<span>
-						vue-cnodejs
-					</span>
-				</li>
-			</a>
-			<a href="demo/react/thermometer/index.html" target="_blank">
-				<li>
-					<span>
-						react-demo-温度计
-					</span>
-				</li>
-			</a>
-		</ol>
-	</div>
+<body class="animated">
+    <div>
+        <h1>Welcome to my Blog!</h1>
+        <a href="https://www.aswind7.com/" class="cta-button">Visit Blog</a>
+    </div>
 </body>
-
 </html>
