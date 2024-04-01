@@ -1,1 +1,1 @@
-[my github pages website.](https://aswind7.github.io/)
+[My website.](https://www.aswind7.com/blog/)
